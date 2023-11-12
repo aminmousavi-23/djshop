@@ -15,6 +15,7 @@ Pillow = "*"
 celery = "*"
 redis = "*"
 django-treebeard = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 
