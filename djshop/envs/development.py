@@ -1,5 +1,10 @@
 from .common import *
 
+ALLOWED_HOSTS = ['*']
+
+INSTALLED_APPS  =  [
+   
+] + INSTALLED_APPS
 
 DATABASES = {
     'default': {
