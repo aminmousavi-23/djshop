@@ -37,10 +37,6 @@ class OptionGroupValue(models.Model):
     group = models.ForeignKey(OptionGroup, on_delete=models.CASCADE)
 
 
-    def has_attribute(self):
-        return self.attributes.exists()
-
-
     def __str__(self):
         return self.title
     
@@ -57,7 +53,12 @@ class ProductClass(models.Model):
     track_stock = models.BooleanField(default=True)
     require_shipping = models.BooleanField(default=True)
 
-    options = models.ManyToManyField('Option')
+    options = models.ManyToManyField('Option', blank=True)
+
+    
+    @property
+    def has_attribute(self):
+        return self.attributes.exists()
 
 
     def __str__(self):

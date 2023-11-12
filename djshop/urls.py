@@ -37,3 +37,8 @@ doc_patterns = [
 urlpatterns = [
     path('admin/', admin.site.urls),
 ] + front_urls + admin_urls + doc_patterns
+
+admin.site.site_title = 'Djshop'
+admin.site.index_title = 'Djshop'
+admin.site.site_header = 'Djshop'
+
