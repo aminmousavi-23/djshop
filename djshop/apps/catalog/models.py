@@ -1,3 +1,4 @@
+from typing import Any, Dict, Tuple
 from django.db import models
 from treebeard.mp_tree import MP_Node
 from djshop.apps.catalog.managers import CategoryQuerySet
@@ -139,6 +140,14 @@ class Product(models.Model):
     attributes = models.ManyToManyField(ProductAttribute, through='ProductAttributeValue')
     recommended_products = models.ManyToManyField('catalog.Product', through='ProductRecommendation', blank=True)
 
+    @property
+    def main_image(self):
+        if self.images.exists():
+            return self.images.first()
+        else:
+            return None
+
+
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
@@ -168,3 +177,20 @@ class ProductRecommendation(models.Model):
     class Meta:
         unique_together = ('primary','recommendation')
         ordering = ('primary','-rank')
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ForeignKey('media.Image', on_delete=models.PROTECT)
+
+    display_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ('display_order',)
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+
+        for index, image in enumerate(self.product.image.all()):
+            image.display_order = index
+            image.save() 
