@@ -3,6 +3,7 @@ from django.db import models
 from treebeard.mp_tree import MP_Node
 from djshop.apps.catalog.managers import CategoryQuerySet
 from djshop.libs.db.fields import UppercaseCharField
+from djshop.libs.db.models import AuditableModel
 
 class Category(MP_Node):
     title = models.CharField(max_length=255, db_index=True)
@@ -119,7 +120,7 @@ class Option(models.Model):
         verbose_name_plural = 'Option'
 
 
-class Product(models.Model):
+class Product(AuditableModel):
 
     class ProductTypeChoice(models.TextChoices):
         standalone = 'standalone'
