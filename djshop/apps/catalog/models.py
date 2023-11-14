@@ -132,9 +132,28 @@ class Product(models.Model):
     is_public = models.BooleanField(default=True)
     meta_title = models.CharField(max_length=128, null=True, blank=True)
     meta_description = models.TextField(null=True, blank=True)
-    
+
     slug = models.SlugField(unique=True, allow_unicode=True)
 
+    product_class = models.ForeignKey(ProductClass, on_delete=models.PROTECT, null=True, blank=True, related_name='products')
+    attributes = models.ManyToManyField(ProductAttribute, through='ProductAttributeValue')
+
     class Meta:
-        verbose_name = 'Option'
-        verbose_name_plural = 'Option'
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
+
+
+class ProductAttributeValue(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    attribute = models.ForeignKey(ProductAttribute, on_delete=models.CASCADE)
+
+    value_text = models.TextField(null=True, blank=True)
+    value_integar = models.IntegerField(null=True, blank=True)
+    value_float = models.FloatField(null=True, blank=True)
+    value_option = models.ForeignKey(OptionGroupValue, on_delete=models.PROTECT)
+    value_multi_option = models.ManyToManyField(OptionGroupValue)
+
+    class Meta:
+        verbose_name = 'Attribute Value'
+        verbose_name_plural = 'Attribute Values'
+        unique_together = ('product','attribute')
