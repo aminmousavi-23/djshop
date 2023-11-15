@@ -140,6 +140,7 @@ class Product(AuditableModel):
     product_class = models.ForeignKey(ProductClass, on_delete=models.PROTECT, null=True, blank=True, related_name='products')
     attributes = models.ManyToManyField(ProductAttribute, through='ProductAttributeValue')
     recommended_products = models.ManyToManyField('catalog.Product', through='ProductRecommendation', blank=True)
+    categories = models.ManyToManyField(Category, related_name='categories')
 
     @property
     def main_image(self):
@@ -161,8 +162,8 @@ class ProductAttributeValue(models.Model):
     value_text = models.TextField(null=True, blank=True)
     value_integar = models.IntegerField(null=True, blank=True)
     value_float = models.FloatField(null=True, blank=True)
-    value_option = models.ForeignKey(OptionGroupValue, on_delete=models.PROTECT)
-    value_multi_option = models.ManyToManyField(OptionGroupValue, related_name='multi_valued_attribute_value')
+    value_option = models.ForeignKey(OptionGroupValue, on_delete=models.PROTECT, null=True, blank=True)
+    value_multi_option = models.ManyToManyField(OptionGroupValue, blank=True, related_name='multi_valued_attribute_value')
 
     class Meta:
         verbose_name = 'Attribute Value'
