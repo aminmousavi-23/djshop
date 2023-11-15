@@ -24,6 +24,7 @@ class Image(models.Model):
     focal_point_height = models.PositiveIntegerField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
+        # TODO: fix
         if not self.image.file.closed:
             self.file_size = self.image.size
 

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'djshop.apps.analytics',
     'djshop.apps.media',
     'djshop.apps.catalog',
+    'djshop.apps.inventory',
 ]
 
 MIDDLEWARE = [
