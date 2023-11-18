@@ -21,10 +21,12 @@ from django.conf.urls.static import static
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 admin_urls = [
+    path('api/admin/users/', include(('djshop.auths.users.urls.admin', 'djshop.auths.users'), namespace='user-admin')),
     path('api/admin/catalog/', include(('djshop.apps.catalog.urls.admin', 'djshop.apps.catalog'), namespace='catalog-admin'))
 ]
 
 front_urls = [
+    path('api/admin/users/', include(('djshop.auths.users.urls.front', 'djshop.auths.users'), namespace='user-front')),
     path('api/front/catalog/', include(('djshop.apps.catalog.urls.front', 'djshop.apps.catalog'), namespace='catalog-front'))
 ]
 
