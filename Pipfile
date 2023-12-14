@@ -16,6 +16,7 @@ celery = "*"
 redis = "*"
 django-treebeard = "*"
 drf-spectacular = "*"
+mysqlclient = "*"
 
 [dev-packages]
 
